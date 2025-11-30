@@ -20,17 +20,19 @@ public class CardGame {
 
         Scanner scanner = new Scanner(System.in);
         Random random = new Random();
+
+
+        int kleurIndex = random.nextInt(Kleur.values().length);
+        int waardeIndex = random.nextInt(Waarde.values().length);
+
+        Kleur randomKleur = Kleur.values()[kleurIndex];
+        Waarde randomWaarde = Waarde.values()[waardeIndex];
+        Kaart huidigeKaart = new Kaart(randomKleur, randomWaarde);
+
+
+
         boolean spelen = true;
         while (spelen) {
-
-
-            int kleurIndex = random.nextInt(Kleur.values().length);
-            int waardeIndex = random.nextInt(Waarde.values().length);
-
-            Kleur randomKleur = Kleur.values()[kleurIndex];
-            Waarde randomWaarde = Waarde.values()[waardeIndex];
-            Kaart huidigeKaart = new Kaart(randomKleur, randomWaarde);
-
 
             char guess;
             do {
@@ -62,10 +64,21 @@ public class CardGame {
             if (isCorrect) {
                 System.out.println("Correct! De nieuwe kaart was: " + nieuweKaart);
                 System.out.println("Wil je verder spelen? (j/n)");
-                char verderspelen = scanner.nextLine().charAt(0);
-                if(verderspelen == 'j'){
-                    huidigeKaart = nieuweKaart;
-                }
+
+
+                char verderspelen;
+                do {
+                    verderspelen = scanner.nextLine().charAt(0);
+                    if (verderspelen == 'j') {
+                        huidigeKaart = nieuweKaart;
+                    } else if (verderspelen == 'n') {
+                        System.out.println("Tot de volgende keer! ^^");
+                        spelen = false;
+                    }
+                    else{
+                        System.out.println("Kies 'j' om verder te spelen of 'n' om te stoppen");
+                    }
+                }while(verderspelen != 'j' && verderspelen != 'n');
 
             } else {
                 System.out.println("Incorrect! De nieuwe kaart was: " + nieuweKaart);
